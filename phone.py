@@ -1,10 +1,9 @@
 from phone.simcom import A7672S
+import time
 gsm=A7672S(path=2,baudrate=115200,t=17,r=16)
 
-#print(dir(gsm.Call))
-
 #*****INFO*****
-#print(gsm.Info.all())
+print(gsm.Info.all())
 # print(gsm.Info.getRSSI())
 # print(gsm.Info.DATETIME)
 # print(gsm.Info.simoprator)
@@ -27,3 +26,8 @@ gsm=A7672S(path=2,baudrate=115200,t=17,r=16)
 #*****check before voice call*****
 # if (gsm.Info.CPSI[1]=='Online'):
 #     print(gsm.Call.dial(9865116823))
+
+#*****control device*****
+#gsm.Ctrl.dtmf(9)
+#gsm.Ctrl.flight()
+print(gsm.Ctrl.me_status())

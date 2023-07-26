@@ -90,7 +90,7 @@ class Info(Com):
             self._cpsi = data.split(':')[1].split(",")
         except:
             self._cpsi=None
-        return self._cpsi.pop()
+        return self._cpsi
     
     def all(self):
         data=[]

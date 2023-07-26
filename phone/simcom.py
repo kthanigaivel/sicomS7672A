@@ -3,6 +3,7 @@ from machine import UART
 from phone.modeinfo.info import Info
 from phone.sms.message import Msg
 from phone.voice.call import Call
+from phone.control.control import Ctrl
 class A7672S(Com):
     TIMEOUT = 1
     def __init__(self,path,baudrate,t,r):
@@ -11,3 +12,4 @@ class A7672S(Com):
         self.Info = Info(self.port)
         self.Msg = Msg(self.port)
         self.Call = Call(self.port)
+        self.Ctrl = Ctrl(self.port)
