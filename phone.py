@@ -1,30 +1,29 @@
 from phone.simcom import A7672S
 gsm=A7672S(path=2,baudrate=115200,t=17,r=16)
 
+#print(dir(gsm.Call))
+
 #*****INFO*****
-print(gsm.Info.all())
-#print(gsm.Info.RSSI)
+#print(gsm.Info.all())
+# print(gsm.Info.getRSSI())
 # print(gsm.Info.DATETIME)
 # print(gsm.Info.simoprator)
 # print(gsm.Info.simstats)
-# print(gsm.Info.CPSI)
+
 
 #*****messages*****
-#gsm.Msg.send(7603826664,'HI HOW ARE YOU?')
-#print(gsm.port)
-# x=(gsm.Msg.readOne(1))
-# print(x['head'][1])
-# print(x['head'][3])
-# print(x['body'])
-for m in range(1,10):
-   print(gsm.Msg.readOne(m))
-
+#gsm.Msg.send(9865116823,'HI HOW ARE YOU?')
+#print(gsm.Msg.readOne(9))
+#read all 0=unread 1=read 2=all
+#print(gsm.Msg.readAll(2))
 #print(gsm.Msg.delAll())
 
 #*****voice call*****
-#gsm.Call.dial(9003474373)
+#gsm.Call.dial(9865116823)
 #gsm.Call.answer()
 #gsm.Call.hangup()
 
 
-
+#*****check before voice call*****
+# if (gsm.Info.CPSI[1]=='Online'):
+#     print(gsm.Call.dial(9865116823))

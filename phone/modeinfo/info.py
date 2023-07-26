@@ -39,9 +39,9 @@ class Info(Com):
         """
         Get the current signal strength in 'bars'
         """
-        data = self.command('AT+CSQ',t=18000,return_data=True)    
+        data = self.command('AT+CSQ','OK')
         try:
-            RSSI = data.decode().split()[2]
+            RSSI = data.split()[1][0:5]
         except:
             RSSI = None
         self._RSSI = RSSI
@@ -49,9 +49,9 @@ class Info(Com):
     
     def getOprator(self):
         # https://stackoverflow.com/questions/39930218/sim7670-gsm-module-returns-0-on-atcops
-        data = self.command('AT+CSPN?',t=10*9000,return_data=True)
+        data = self.command('AT+CSPN?','OK')
         try:
-            simoprator = data.decode().split(":")[1].split(",")[0].replace('"', "")
+            simoprator = data.split(":")[1].split(",")[0].replace('"', "")
             simoprator = simoprator.strip().upper()
         except:
             simoprator = None
@@ -62,9 +62,9 @@ class Info(Com):
     def checkSim(self):
         # enable the extended error codes to get a verbose format
         #self.command('AT+CMEE=2',t=9000,read=False)
-        data = self.command('AT+CMEE=2;+CPIN?',t=100000,return_data=True)
+        data = self.command('AT+CMEE=2;+CPIN?','OK')
         try:
-            simstats = data.decode().split(":")[1].split()[0]
+            simstats = data.split(":")[1].split()[0][0:5]
         except:
             simstats = None
         self._simstats = simstats
@@ -74,10 +74,10 @@ class Info(Com):
         """
         Get the current Time'
         """
-        data = self.command('AT+CNTP;+CCLK?',t=120000,return_data=True)
+        data = self.command('AT+CNTP;+CCLK?','OK')
         try:
-            date = data.decode().split("\n")[1].strip()[8:28].split(',')[0]
-            time = data.decode().split("\n")[1].strip()[8:28].split(',')[1]
+            date = data.split(" ")[1].split(",")[0]
+            time = data.split(" ")[1].split(",")[1][0:8]
             self._DATETIME=[date,time]
         except:
             self._DATETIME = None
@@ -85,12 +85,12 @@ class Info(Com):
 
     def getCPSI(self):
         cmd = 'AT+CPSI?'
-        data = self.command(cmd,t=250000,return_data=True)
+        data = self.command(cmd,'OK')
         try:
-            self._cpsi = data.decode().split(':')[1].strip().split(',')[0:12]
+            self._cpsi = data.split(':')[1].split(",")
         except:
             self._cpsi=None
-        return self._cpsi
+        return self._cpsi.pop()
     
     def all(self):
         data=[]
