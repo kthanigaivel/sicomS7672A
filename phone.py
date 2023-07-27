@@ -30,4 +30,5 @@ print(gsm.Info.all())
 #*****control device*****
 #gsm.Ctrl.dtmf(9)
 #gsm.Ctrl.flight()
-print(gsm.Ctrl.me_status())
+#gsm.Ctrl.reset()
+#print(gsm.Ctrl.me_status())
