@@ -39,7 +39,7 @@ class Info(Com):
         """
         Get the current signal strength in 'bars'
         """
-        data = self.command('AT+CSQ','OK')
+        data = self.command('AT+CSQ','CSQ')
         try:
             RSSI = data.split()[1][0:5]
         except:
@@ -49,7 +49,7 @@ class Info(Com):
     
     def getOprator(self):
         # https://stackoverflow.com/questions/39930218/sim7670-gsm-module-returns-0-on-atcops
-        data = self.command('AT+CSPN?','OK')
+        data = self.command('AT+CSPN?','CSPN')
         try:
             simoprator = data.split(":")[1].split(",")[0].replace('"', "")
             simoprator = simoprator.strip().upper()
@@ -62,7 +62,7 @@ class Info(Com):
     def checkSim(self):
         # enable the extended error codes to get a verbose format
         #self.command('AT+CMEE=2',t=9000,read=False)
-        data = self.command('AT+CMEE=2;+CPIN?','OK')
+        data = self.command('AT+CMEE=2;+CPIN?','CPIN')
         try:
             simstats = data.split(":")[1].split()[0][0:5]
         except:
@@ -74,7 +74,7 @@ class Info(Com):
         """
         Get the current Time'
         """
-        data = self.command('AT+CNTP;+CCLK?','OK')
+        data = self.command('AT+CNTP;+CCLK?','CCLK')
         try:
             date = data.split(" ")[1].split(",")[0]
             time = data.split(" ")[1].split(",")[1][0:8]
@@ -85,7 +85,7 @@ class Info(Com):
 
     def getCPSI(self):
         cmd = 'AT+CPSI?'
-        data = self.command(cmd,'OK')
+        data = self.command(cmd,'CPSI')
         try:
             self._cpsi = data.split(':')[1].split(",")
         except:

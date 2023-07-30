@@ -61,7 +61,7 @@ class Com:
         
         self.read(expect, duration)
         while self.running():
-            await asyncio.sleep(0.2) # Pause 0.2s
+            await asyncio.sleep(0) # Pause 0.2s
             
         result = self.result
         return result
@@ -69,7 +69,7 @@ class Com:
     async def reading(self,expect=None,duration=1000):
         self.read(expect,duration)
         while self.running():
-            await asyncio.sleep(0.2)
+            await asyncio.sleep(0)
         result = self.result
         return result
 
