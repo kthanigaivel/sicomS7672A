@@ -4,25 +4,25 @@ class Ctrl(Com):
         super().__init__(*args, **kwargs)
 
     def dtmf(self,char):
-        cmd = 'AT+VTS='+str(char)
+        cmd = b'AT+VTS='+str(char)+b'\r'
         return self.write(cmd)
     def flight(self):
-        cmd = 'AT+CFUN=7'
+        cmd = b'AT+CFUN=7\r'
         self.write(cmd)
     def online(self):
-        cmd = 'AT+CFUN=6'
+        cmd = b'AT+CFUN=6\r' 
         self.write(cmd)
-        cmd = 'AT+CFUN=1'
+        cmd = b'AT+CFUN=1\r' 
         self.write(cmd)  
     def poweroff(self):
-        cmd = 'AT+CPOF'
+        cmd = b'AT+CPOF\r' 
         self.write(cmd)
     def reset(self):
-        cmd = 'AT+CRESET'
+        cmd = b'AT+CRESET\r'
         self.write(cmd)
     def me_status(self):
         #0 ready
         #3 ringing
         #4 call in progress
-        cmd = 'AT+CPAS'
-        return self.command(cmd,'OK')
+        cmd = b'AT+CPAS\r' 
+        return self.command(cmd)

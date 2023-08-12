@@ -3,14 +3,14 @@ class Call(Com):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     def dial(self, number):
-        cmd = 'ATD"{}";'.format(number)
+        cmd = b'ATD"{}";\r'.format(number)
         return self.write(cmd) 
 
     def hangup(self):
-        cmd = "AT+CHUP"
+        cmd = b"AT+CHUP\r"
         return self.write(cmd)
     
     def answer(self):
-        cmd = "ATA"
+        cmd = b"ATA\r"
         return self.write(cmd)
         return True

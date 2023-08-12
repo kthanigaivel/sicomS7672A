@@ -3,16 +3,17 @@ import time
 gsm=A7672S(path=2,baudrate=115200,t=17,r=16)
 
 #*****INFO*****
-print(gsm.Info.all())
-# print(gsm.Info.getRSSI())
-# print(gsm.Info.DATETIME)
-# print(gsm.Info.simoprator)
-# print(gsm.Info.simstats)
+#print(gsm.Info.all())
+#print((gsm.Info.RSSI))
+#print(gsm.Info.DATETIME)
+#print(gsm.Info.simoprator)
+#print(gsm.Info.simstats)
+#print(gsm.Info.getCPSI())
 
 
 #*****messages*****
 #gsm.Msg.send(9865116823,'HI HOW ARE YOU?')
-#print(gsm.Msg.readOne(9))
+#print(gsm.Msg.readOne(2))
 #read all 0=unread 1=read 2=all
 #print(gsm.Msg.readAll(2))
 #print(gsm.Msg.delAll())
@@ -31,4 +32,4 @@ print(gsm.Info.all())
 #gsm.Ctrl.dtmf(9)
 #gsm.Ctrl.flight()
 #gsm.Ctrl.reset()
-#print(gsm.Ctrl.me_status())
+print(gsm.Ctrl.me_status())

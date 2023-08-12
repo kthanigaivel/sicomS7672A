@@ -1,87 +1,45 @@
-import time
 import uasyncio as asyncio
-
+from machine import UART
+from time import sleep
 class Com:
-    def __init__(self, port):
-        self._port = port
-        self.loop = asyncio.get_event_loop()
-        self.deadline = None
-        self.result = ''
-
-    async def app_loop(self,comm,exp):
-        await self.command1(comm,exp)
-
+    DELIMITER = b'\r\n'
+    def __init__(self, a):
+        self.a = a
+        self.uart = UART(2, baudrate=115200,tx=17,rx=16)
+        self.sreader = asyncio.StreamReader(self.uart)
+        self.swriter = asyncio.StreamWriter(self.uart,{})
+    def __iter__(self):
+        data=b'\r\n'
+        self.swriter.write(self.a)
         
-    def command(self,comm,exp):
-        self.loop.create_task(self.app_loop(comm,exp))
-        self.loop.run_forever()
-        return self.result[:-2]
-        
-       
-    def write(self, command,slp=0.1):
-        self._port.write("{}\r".format(command))
-        time.sleep(slp)
-    
-       
-    async def writeline(self, command):
-        self._port.write("{}\r".format(command))
-                
-    def stop(self, in_advance=False):
-        self.deadline = None
-        
-    def running(self):
-        return self.deadline is not None
-    
-    def postpone(self, duration = 1000):
-        self.deadline = time.ticks_add(time.ticks_ms(), duration)
-        
-    def read(self, expect=None, duration=1000):
-        self.result = ''
-        self.postpone(duration)
-        self.loop.create_task(self.read_killer(expect, duration))
-    
-    async def read_killer(self, expect=None, duration=1000):
-        time_left = time.ticks_diff(self.deadline, time.ticks_ms())
-        while time_left > 0:
-            line = self._port.readline()
-            if line:
-                line = convert_to_string(line)
-                self.result += line
-                if expect and line.find(expect)==0:
-                # if expect and expect in line:
-                    self.stop(True)
-                    return True
-                self.postpone(duration)
-            time_left = time.ticks_diff(self.deadline, time.ticks_ms())
-        self.stop()
-        
-        
-    async def command1(self, command, expect=None, duration=1000):
-        await self.writeline(command)
-        
-        self.read(expect, duration)
-        while self.running():
-            await asyncio.sleep(0) # Pause 0.2s
+        while not data.endswith(b'OK\r\n'):
+#             if data:
+#                 print(data)
+            data +=await self.sreader.readline()
+            if data.endswith(b'END\r\n'):
+                return data
+            elif data.endswith(b'OK\r\n'):
+                return data
+            elif data.endswith(b'PB DONE\r\n'):
+                return data
+            elif data.endswith(b'ERROR\r\n'):
+                return data
             
-        result = self.result
-        return result
-    
-    async def reading(self,expect=None,duration=1000):
-        self.read(expect,duration)
-        while self.running():
-            await asyncio.sleep(0)
-        result = self.result
-        return result
-
-def convert_to_string(buf):
-    try:
-        tt =  buf.decode('utf-8').strip()
-        return tt
-    except UnicodeError:
-        tmp = bytearray(buf)
-        for i in range(len(tmp)):
-            if tmp[i]>127:
-                tmp[i] = ord('#')
-        return bytes(tmp).decode('utf-8').strip()
-
-    
+            else:
+                continue
+            
+            yield from asyncio.sleep(0)
+    def write(self,comm,slp=0.2):
+        self.uart.write(comm)
+        sleep(slp)
+        
+        
+               
+    @staticmethod
+    async def bar(a):
+        res = await Com(a)  # Retrieve result
+        return res
+        
+    @staticmethod
+    def command(a):
+        return asyncio.run(Com.bar(a))

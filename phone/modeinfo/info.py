@@ -39,9 +39,9 @@ class Info(Com):
         """
         Get the current signal strength in 'bars'
         """
-        data = self.command('AT+CSQ','CSQ')
+        data = self.command(b'AT+CSQ\r')
         try:
-            RSSI = data.split()[1][0:5]
+            RSSI = data.decode().split()[2]
         except:
             RSSI = None
         self._RSSI = RSSI
@@ -49,10 +49,10 @@ class Info(Com):
     
     def getOprator(self):
         # https://stackoverflow.com/questions/39930218/sim7670-gsm-module-returns-0-on-atcops
-        data = self.command('AT+CSPN?','CSPN')
+        data = self.command(b'AT+CSPN?\r')
+        print()
         try:
-            simoprator = data.split(":")[1].split(",")[0].replace('"', "")
-            simoprator = simoprator.strip().upper()
+            simoprator = data.decode().split()[2].split(',')[0].upper().replace('"', "")
         except:
             simoprator = None
         self._simoprator = simoprator
@@ -62,9 +62,9 @@ class Info(Com):
     def checkSim(self):
         # enable the extended error codes to get a verbose format
         #self.command('AT+CMEE=2',t=9000,read=False)
-        data = self.command('AT+CMEE=2;+CPIN?','CPIN')
+        data = self.command(b'AT+CMEE=2;+CPIN?\r')
         try:
-            simstats = data.split(":")[1].split()[0][0:5]
+            simstats =data.decode().split()[2]
         except:
             simstats = None
         self._simstats = simstats
@@ -74,20 +74,19 @@ class Info(Com):
         """
         Get the current Time'
         """
-        data = self.command('AT+CNTP;+CCLK?','CCLK')
+        data = self.command(b'AT+CNTP;+CCLK?\r')
         try:
-            date = data.split(" ")[1].split(",")[0]
-            time = data.split(" ")[1].split(",")[1][0:8]
+            date = data.decode().split()[2].split(',')[0]
+            time = data.decode().split()[2].split(',')[1]
             self._DATETIME=[date,time]
         except:
             self._DATETIME = None
         return self._DATETIME
 
     def getCPSI(self):
-        cmd = 'AT+CPSI?'
-        data = self.command(cmd,'CPSI')
+        data = self.command(b'AT+CPSI?\r')
         try:
-            self._cpsi = data.split(':')[1].split(",")
+            self._cpsi = data.decode().split()[2].split()
         except:
             self._cpsi=None
         return self._cpsi

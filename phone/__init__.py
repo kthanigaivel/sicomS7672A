@@ -1,1 +1,0 @@
-from phone.simcom import A7672S
