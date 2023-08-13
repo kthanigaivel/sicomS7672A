@@ -3,7 +3,7 @@ from machine import UART
 from time import sleep
 class Com:
     DELIMITER = b'\r\n'
-    def __init__(self, a):
+    def __init__(self, a=None):
         self.a = a
         self.uart = UART(2, baudrate=115200,tx=17,rx=16)
         self.sreader = asyncio.StreamReader(self.uart)

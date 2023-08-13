@@ -1,7 +1,6 @@
 from phone.com import Com
 class Info(Com):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self):
         self._RSSI = None
         self._simoprator = None
         self._simstats = None

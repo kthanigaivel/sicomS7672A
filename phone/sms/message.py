@@ -1,9 +1,6 @@
 from phone.com import Com
 
 class Msg(Com):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     def send(self, number, sms):
         cmd=b'AT+CMGF=1\r'
         # Sets the GSM Module in Text Mode

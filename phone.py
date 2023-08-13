@@ -1,9 +1,8 @@
 from phone.simcom import A7672S
-import time
-gsm=A7672S(path=2,baudrate=115200,t=17,r=16)
+gsm=A7672S()
 
 #*****INFO*****
-#print(gsm.Info.all())
+print(gsm.Info.all())
 #print((gsm.Info.RSSI))
 #print(gsm.Info.DATETIME)
 #print(gsm.Info.simoprator)
@@ -32,4 +31,4 @@ gsm=A7672S(path=2,baudrate=115200,t=17,r=16)
 #gsm.Ctrl.dtmf(9)
 #gsm.Ctrl.flight()
 #gsm.Ctrl.reset()
-print(gsm.Ctrl.me_status())
+#print(gsm.Ctrl.me_status())

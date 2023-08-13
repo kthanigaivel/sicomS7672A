@@ -1,8 +1,5 @@
 from phone.com import Com
 class Ctrl(Com):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     def dtmf(self,char):
         cmd = b'AT+VTS='+str(char)+b'\r'
         return self.write(cmd)
