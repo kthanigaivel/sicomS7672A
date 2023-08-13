@@ -3,7 +3,7 @@ from machine import UART
 from time import sleep
 class Com:
     DELIMITER = b'\r\n'
-    def __init__(self, a=None):
+    def __init__(self, a=b'at\r'):
         self.a = a
         self.uart = UART(2, baudrate=115200,tx=17,rx=16)
         self.sreader = asyncio.StreamReader(self.uart)
@@ -29,8 +29,8 @@ class Com:
                 continue
             
             yield from asyncio.sleep(0)
-    def write(self,comm,slp=0.2):
-        self.uart.write(comm)
+    def write(self,comm,slp=0.1):
+        self.swriter.write(comm)
         sleep(slp)
         
         

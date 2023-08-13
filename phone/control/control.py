@@ -1,5 +1,15 @@
 from phone.com import Com
 class Ctrl(Com):
+    def config(self):
+        return self.command(b'AT&V\r')
+        
+    def spk_mute(self,bool):
+        cmd = b'AT+VMUTE='+str(bool)+b'\r'
+        return self.write(cmd)
+    def mic_mute(self,bool):
+        cmd = b'AT+CMUTE='+str(bool)+b'\r'
+        return self.write(cmd)
+    
     def dtmf(self,char):
         cmd = b'AT+VTS='+str(char)+b'\r'
         return self.write(cmd)
