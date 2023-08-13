@@ -7,7 +7,7 @@ class Msg(Com):
         self.write(cmd)
         cmd = b'AT+CMGS="{}"\r'.format(number)
         self.write(cmd)
-        self.write(sms,0.1)
+        self.write(sms,0.3)
         cmd = b'\x1a\r'
         data= self.command(cmd)
         return data

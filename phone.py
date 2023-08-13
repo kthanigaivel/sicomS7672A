@@ -12,9 +12,9 @@ print(gsm.Info.all())
 
 #*****messages*****
 #gsm.Msg.send(9865116823,'HI HOW ARE YOU?')
-#print(gsm.Msg.readOne(2))
-#read all 0=unread 1=read 2=all
-#print(gsm.Msg.readAll(2))
+#print(gsm.Msg.readOne(1))
+#read all unread=0 read=1 all=2
+print(gsm.Msg.readAll(2).decode())
 #print(gsm.Msg.delAll())
 
 #*****voice call*****
@@ -33,5 +33,5 @@ print(gsm.Info.all())
 #gsm.Ctrl.reset()
 #gsm.Ctrl.spk_mute(True)
 #gsm.Ctrl.mic_mute(False)
-print(gsm.Ctrl.config())
+#print(gsm.Ctrl.config())
 #print(gsm.Ctrl.me_status())

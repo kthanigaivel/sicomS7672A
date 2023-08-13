@@ -10,10 +10,8 @@ touch_pin = TouchPad(Pin(4))
 
 print((touch_pin.read()))
 
-# print("\nESP32 Touch Demo")
-# while True: # Infinite loop
-#   capacitiveValue = touch_pin.read()
-#   if capacitiveValue < threshold:
-#     print("Fil touché")
-#     time.sleep_ms(500)
-#     gsm.Call.dial(9865116823)
+print("\nESP32 Touch Demo")
+while True: # Infinite loop
+  capacitiveValue = touch_pin.read()
+  if capacitiveValue < threshold:
+      print(gsm.Msg.readAll(2))

@@ -12,9 +12,7 @@ class Com:
         data=b'\r\n'
         self.swriter.write(self.a)
         
-        while not data.endswith(b'OK\r\n'):
-#             if data:
-#                 print(data)
+        while True:
             data +=await self.sreader.readline()
             if data.endswith(b'END\r\n'):
                 return data
@@ -24,12 +22,11 @@ class Com:
                 return data
             elif data.endswith(b'ERROR\r\n'):
                 return data
-            
             else:
                 continue
             
             yield from asyncio.sleep(0)
-    def write(self,comm,slp=0.1):
+    def write(self,comm,slp=1):
         self.swriter.write(comm)
         sleep(slp)
         

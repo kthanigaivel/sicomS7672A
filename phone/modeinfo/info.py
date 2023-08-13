@@ -85,7 +85,7 @@ class Info(Com):
     def getCPSI(self):
         data = self.command(b'AT+CPSI?\r')
         try:
-            self._cpsi = data.decode().split()[2].split()
+            self._cpsi = data.decode().split()[2].split(',')[0:2]
         except:
             self._cpsi=None
         return self._cpsi
